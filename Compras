@@ -1,0 +1,20 @@
+DELIMITER $$
+
+CREATE PROCEDURE RelatorioComprasDiario()
+BEGIN
+    SELECT 
+        c.data_compra,
+        p.id_produto,
+        p.nome_produto,
+        SUM(c.quantidade) AS total_comprado_no_dia
+    FROM 
+        compras c
+    JOIN 
+        produtos p ON c.id_produto = p.id_produto
+    GROUP BY 
+        c.data_compra, p.id_produto, p.nome_produto
+    ORDER BY 
+        c.data_compra ASC, p.nome_produto ASC;
+END $$
+
+DELIMITER ;
